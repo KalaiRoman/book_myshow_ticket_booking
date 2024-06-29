@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import './App.scss';
 import { RoutingPathAll } from './middleware/routingpaths/RoutingPaths';
 import {
   Route,
@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserLoadingFunction } from './redux/Reducer/Browser_loading_Reducer';
+import { Loader } from './middleware/loader/Loader';
 function App() {
   const dispatch=useDispatch();
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,9 @@ function App() {
   }, []);
   return (
     <>
-      {state?.BrowserLoading ?<div className="loader">Loading...</div>:<>
+      {state?.BrowserLoading ?<div>
+        <Loader/>
+      </div>:<>
         <Routes>
         {RoutingPathAll?.map((item, index) => {
           const { path, exactpath, element } = item;

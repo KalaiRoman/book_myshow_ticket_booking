@@ -26,14 +26,12 @@ const useAxiosUrl=()=>{
           return response;
         },
         (error) => {
-          // Handle response error here
           return Promise.reject(error);
         }
       );
 
     useEffect(() => {
         const source = axios.CancelToken.source();
-    
         return () => {
           source.cancel("Component unmounted: Request cancelled.");
         };
@@ -43,7 +41,6 @@ const useAxiosUrl=()=>{
     const fetchData=async({url,method,data={},params={}})=>{
         setLoading(true);
         try {
-
             const result = await axiosInstance({
                 url,
                 method,

@@ -1,0 +1,26 @@
+@use "../abstract" as *;
+
+.closeModelbtn {
+  width: auto;
+  padding: 5px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.success-btn {
+  background-color: #1967d2;
+  color: white;
+  cursor: pointer;
+  padding: 5px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
