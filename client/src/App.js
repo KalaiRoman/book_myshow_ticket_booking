@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserLoadingFunction } from './redux/Reducer/Browser_loading_Reducer';
 import { Loader } from './middleware/loader/Loader';
+import ProtectedRouter from './middleware/routingpaths/ProtectedRouter';
 function App() {
   const dispatch=useDispatch();
   const [loading, setLoading] = useState(false);
@@ -28,9 +29,13 @@ function App() {
         <Routes>
         {RoutingPathAll?.map((item, index) => {
           const { path, exactpath, element } = item;
-          return (
+          return(
+            <>
+             {/* <Route element={<ProtectedRouter/>}> */}
             <Route exact={exactpath} element={element} path={path} key={index} />
-          );
+            {/* </Route> */}
+            </>
+          )
         })}
       </Routes>
       </>}

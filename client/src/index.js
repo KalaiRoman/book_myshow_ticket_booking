@@ -15,10 +15,18 @@ import { Provider } from 'react-redux';
 // redux store 
 import { store } from './redux/Store/Stores';
 
+// Toaster
+
+import { Toaster } from 'react-hot-toast';
+
 import { BrowserRouter } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+     <Toaster 
+       position="top-center"
+       reverseOrder={false}
+     />  
   <BrowserRouter>
     <App />
   </BrowserRouter>

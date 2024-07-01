@@ -30,10 +30,9 @@ for(let i=1;i<BookingSheats?.length;i++)
 
   const TicketBooked=(paramsTicketId)=>{
 
-      setError("One Person Booked Ticket Only 10, Please Login Another Enmail Id");
+      setError("One Person Booked Ticket Only 10, Please Login Another Email Id");
       if (paramsTicketId) {
         if (Tickets?.includes(paramsTicketId)) {
-
           const filterLocalTickets=YourBookedticket?.filter((item)=>item!==paramsTicketId);
           setYourBookedTicket(filterLocalTickets)
             dispatch(filterTicket(paramsTicketId));
