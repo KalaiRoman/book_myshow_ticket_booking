@@ -15,7 +15,7 @@ function App() {
   const state=useSelector((state)=>state?.InitialLoading);
   useEffect(() => {
     setLoading(true);
-    dispatch(BrowserLoadingFunction(true));
+    dispatch(BrowserLoadingFunction(!true));
     const timer = setTimeout(() =>{ setLoading(false)
       dispatch(BrowserLoadingFunction(loading));
     }, 500); 

@@ -1,3 +1,4 @@
 
 import Home from './../components/home/Home';
-export {Home}
+import Auth from './../components/auth/Auth';
+export {Home,Auth}

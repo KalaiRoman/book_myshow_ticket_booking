@@ -20,9 +20,11 @@ import { store } from './redux/Store/Stores';
 import { Toaster } from 'react-hot-toast';
 
 import { BrowserRouter } from 'react-router-dom';
+import { AppProvider } from './contextApi/ContextApi';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+    <AppProvider>
      <Toaster 
        position="top-center"
        reverseOrder={false}
@@ -30,6 +32,7 @@ root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </AppProvider>
   </Provider>
 );
 

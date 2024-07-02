@@ -7,7 +7,7 @@ const useAxiosUrl=()=>{
     const [error,setError]=useState("");
     // Base Url
     const axiosInstance=axios.create({
-        baseURL:""
+        baseURL:process.env.REACT_APP_BASE_URL
     })
 
     axiosInstance.interceptors.request.use(
@@ -36,15 +36,13 @@ const useAxiosUrl=()=>{
           source.cancel("Component unmounted: Request cancelled.");
         };
       }, []);
-    
-
     const fetchData=async({url,method,data={},params={}})=>{
         setLoading(true);
         try {
             const result = await axiosInstance({
                 url,
                 method,
-                data: method.toLowerCase() === "get" ? undefined : data, // Only include data for non-GET requests
+                data:method.toLowerCase()==="post"?data:method.toLowerCase() === "get"? undefined : data, // Only include data for non-GET requests
                 params: method.toLowerCase() === "get" ? data : params, // For GET requests, use data as query params
                 cancelToken: axios.CancelToken.source().token,
               });
