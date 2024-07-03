@@ -13,6 +13,8 @@ function TicketsSection() {
   const state=useSelector((state)=>state?.tickBook);
   const [YourBookedticket,setYourBookedTicket]=useState([]);
   const [YourBookedticketpay,setYourBookedTicketPay]=useState(null);
+  const [YourBookedticketOtherpay,setYourBookedTicketOtherPay]=useState(null);
+
 
   const [error,setError]=useState("");
   const {Tickets,allTickets}=state;
@@ -40,7 +42,6 @@ for(let i=1;i<BookingSheats?.length;i++)
         else {
           if(YourBookedticket?.length>9)
             {
-
             }
             else{
               setYourBookedTicket([...YourBookedticket, paramsTicketId]);
@@ -78,9 +79,8 @@ const Booked_user_tickets=async()=>{
     const response=await get_booked_services(name);
     if(response)
       {
-        setYourBookedTicketPay(
-        response?.data?.data
-        )
+        setYourBookedTicketPay(response?.data?.data?.Your_tickets);
+        setYourBookedTicketOtherPay(response?.data?.data?.OtherUserTickets);
       }
   } catch (error) {
   }
@@ -113,13 +113,18 @@ useEffect(()=>{
 
 <div className='col-lg-6 w-[50%]'>
 <LeftSheats BookingSheats={allTickets}
-
 handleTicketBooking={YourBookedticket?.length>9?TicketBooked:handleTicketBooking} Tickets={Tickets}
 YourBookedticketpay={YourBookedticketpay}
+YourBookedticketOtherpay={YourBookedticketOtherpay}
 />
 </div>
 <div className='col-lg-6 w-[50%]'>
-  <RightSheats BookingSheats={allTickets} handleTicketBooking={YourBookedticket?.length>9?TicketBooked:handleTicketBooking} Tickets={Tickets}/>
+  <RightSheats 
+  BookingSheats={allTickets}
+  handleTicketBooking={YourBookedticket?.length>9?TicketBooked:handleTicketBooking} Tickets={Tickets}
+  YourBookedticketpay={YourBookedticketpay}
+  YourBookedticketOtherpay={YourBookedticketOtherpay}
+  />
 </div>
 </div>
 

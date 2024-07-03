@@ -7,6 +7,8 @@ export const ticket_create = async (req, res) => {
     const { movieName, tickets } = req.body;
     try {
         let movieTicket = await Book_ticket_shema.findOne({ movieName });
+
+        
         if (movieTicket) {
             const UserTickets = tickets;
             const DatBaseBookedTickets = movieTicket?.tickets;
@@ -46,10 +48,31 @@ export const ticket_get_user=async(req,res)=>{
     try {
         const existTicketIdCheck=await Book_ticket_shema.findOne({movieName}).lean();
         const filterData=[];
-        existTicketIdCheck?.tickets?.map((item)=>{
-            filterData.push(item?.ticketId);
-        })
-        return ResponseSuccessData({res,success:false,message:"Ticket Booked Single User",data:filterData,code:200})
+        const filterOtherData=[];
+
+        if(existTicketIdCheck?.tickets?.length>0)
+            {
+                existTicketIdCheck?.tickets?.map((item)=>{
+
+                    if(item?.userId==req.userid)
+                        {
+                            filterData.push(item?.ticketId);
+        
+                        }
+                        else{
+                            filterOtherData.push(item?.ticketId);
+        
+                        }
+                })
+            }
+
+      
+
+        const ticketUsers={
+            "Your_tickets":filterData,
+            "OtherUserTickets":filterOtherData
+        }
+        return ResponseSuccessData({res,success:false,message:"Ticket Booked Single User",data:ticketUsers,code:200})
     } catch (error) {
         return ResponseErrorData({res,success:false,message:"Server Error",code:404})
         

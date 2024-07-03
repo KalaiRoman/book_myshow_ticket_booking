@@ -5,6 +5,8 @@ import auth_shema_model from "../../models/auth_shema/auth_shema_model.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 export const register_controll=async(req,res)=>{
+
+    console.log(req.body,"kl")
     try {
         const {email,password,address,city,pincode,mobileNo}=req.body;
         const genSalt=await bcrypt.genSalt(10);
@@ -12,7 +14,7 @@ export const register_controll=async(req,res)=>{
         const existMailCheck=await auth_shema_model.findOne({email:email});
         if(existMailCheck) return ResponseErrorData({res,success:false,message:"Email Already Exists",code:404});  
         const token = jwt.sign({_id:existMailCheck?._id},process.env.tokenId,{expiresIn:"2d"});
-        const {password:_,...otherData}=existMailCheck?._doc; 
+        // const {,...otherData}=existMailCheck?._doc; 
         if(email && password && address && city && pincode && mobileNo)
             {
 const response=await auth_shema_model({
@@ -25,7 +27,7 @@ const response=await auth_shema_model({
 });
 await response.save();
 const tokenResponseData={
-    "user":otherData,
+    "user":response,
     "token":token
 }
 return ResponseSuccessData({res,success:true,message:"User Created Sucessfully",data:tokenResponseData,code:201});

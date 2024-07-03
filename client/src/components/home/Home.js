@@ -14,7 +14,8 @@ function Home() {
     const TicketBooking=async(paramsMoview)=>
     {
             const data={
-                movieName:paramsMoview
+                movieName:paramsMoview,
+                tickets:[]
               }
               const response=await book_services(data);
               if(response)
