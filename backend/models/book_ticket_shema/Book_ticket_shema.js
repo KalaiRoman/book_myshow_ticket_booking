@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const Ticket_models=new mongoose.Schema({
+
+const ticketArray_model=new mongoose.Schema({
     ticketId:{
         type:String,
         required:true
@@ -9,6 +10,13 @@ const Ticket_models=new mongoose.Schema({
         type:mongoose.Schema.ObjectId,
         ref:"auth"
     }
+})
+const Ticket_models=new mongoose.Schema({
+    movieName:{
+        type:String,
+        required:true
+    },
+  tickets:[ticketArray_model]
 },
 {
     timestamps:true

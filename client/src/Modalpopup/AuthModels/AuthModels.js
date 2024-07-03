@@ -4,14 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LoginModalClose, LoginModalShow } from '../../redux/Reducer/Modal_show_form';
 import { useState } from 'react';
 import { ToastError } from '../../middleware/Toastmodels/ToastModels';
-import useAxiosUrl from '../../config/AxiosBaseUrl';
-import { Login_services } from '../../services/serviceHookes/AllServiceHookes';
-import { All_Apis } from '../../services/allApis/AllApis';
+import { loginservices } from '../../services/serviceHookes/AllServiceHookes';
 
 export const LoginModels=()=>{
     const state=useSelector((state)=>state?.authModal);
 
-    const {error,message,loading,response,fetchData}=useAxiosUrl();
     const {loginModel}=state;
     const dispatch=useDispatch();
     const handleClose=()=>{
@@ -53,20 +50,18 @@ password:""
             "email":email,
             "password":password
           }
-await fetchData({
-  url:All_Apis?.login_api,
-  method:"POST",
-  data:datas,
+const response=await loginservices(datas);
+
+setUser({
+  email:"",
+  password:""
 })
 
-console.log(response,"re")
-localStorage.setItem("ticket_token",response?.data?.token);
+localStorage.setItem("ticket_token",JSON.stringify(response?.data?.token));
 handleClose();
 
         }
-        else{
-          ToastError(message)
-        }
+       
     }
     return(
         <>

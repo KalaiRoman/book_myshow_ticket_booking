@@ -1,96 +1,49 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import Header from '../../middleware/header/Header'
 import Footer from '../../middleware/footer/Footer'
-import LeftSheats from './LeftSheats'
-import RightSheats from './RightSheats'
-import { useDispatch, useSelector } from 'react-redux'
-import { BookTicket,filterTicket } from '../../redux/Reducer/TicketBooking_reducer'
+import {useNavigate } from 'react-router-dom';
+import { book_services } from '../../services/serviceHookes/AllServiceHookes';
 function Home() {
-  const [sheat,setSheats]=useState([]);
-  const BookingSheats=Array(341)?.fill("Sheats");
-  const dispatch=useDispatch();
-  const state=useSelector((state)=>state?.tickBook);
-  const [YourBookedticket,setYourBookedTicket]=useState([]);
 
-  const [error,setError]=useState("");
-  const {Tickets}=state;
 
-  useEffect(()=>{
-  var AllInputSheats=[];
-for(let i=1;i<BookingSheats?.length;i++)
-  {
-    const values={
-      index:`S${i}`,
-      status:false
+    const navigate=useNavigate ();
+
+    const movienNameList=["Garudan","PT Sir","Rasavathi","Aranmanai 4","Teenz","Indian 2","Lal Salaam","Ayalaan","Captain Miller","Merry Christmas","Amaran","The Greatest of All Time","Bharateeyudu 2"]
+
+  
+    const TicketBooking=async(paramsMoview)=>
+    {
+            const data={
+                movieName:paramsMoview
+              }
+              const response=await book_services(data);
+              if(response)
+                {
+        navigate(`/ticket/${paramsMoview}`);
+                    
+                }
     }
-    AllInputSheats.push(values);
-  }
-  setSheats(AllInputSheats);
-  },[]);
-
-  const TicketBooked=(paramsTicketId)=>{
-
-      setError("One Person Booked Ticket Only 10, Please Login Another Email Id");
-      if (paramsTicketId) {
-        if (Tickets?.includes(paramsTicketId)) {
-          const filterLocalTickets=YourBookedticket?.filter((item)=>item!==paramsTicketId);
-          setYourBookedTicket(filterLocalTickets)
-            dispatch(filterTicket(paramsTicketId));
-        }
-        else {
-          if(YourBookedticket?.length>9)
-            {
-
-            }
-            else{
-              setYourBookedTicket([...YourBookedticket, paramsTicketId]);
-              dispatch(BookTicket(paramsTicketId));
-            }
-         
-      }
-      }
-  }
-
-  const handleTicketBooking = useCallback((paramsTicketId) => {
-    if (paramsTicketId) {
-        if (Tickets?.includes(paramsTicketId)) {
-          const filterLocalTickets=YourBookedticket?.filter((item)=>item!==paramsTicketId);
-          setYourBookedTicket(filterLocalTickets)
-            dispatch(filterTicket(paramsTicketId));
-        } else {
-            setYourBookedTicket([...YourBookedticket, paramsTicketId]);
-            dispatch(BookTicket(paramsTicketId));
-        }
-    }
-}, [Tickets,error]);
-
-  return (
+  
+    return (
     <div>
-     <section>
-     <Header/>
-     </section>
-      <section>
-      <div className='w-[100%] h-[100vh] overflow-hidden lg:h-[100%]'>
-      <div className='text-danger'>
-        {YourBookedticket?.length>9 && <>
-        
-    {error && <div>{error}</div>}
-    </>}
-  </div>
-<div className='d-flex gap-2 w-[100%] h-[100%]'>
-
-<div className='col-lg-6 w-[50%]'>
-<LeftSheats BookingSheats={sheat} handleTicketBooking={YourBookedticket?.length>9?TicketBooked:handleTicketBooking} Tickets={Tickets}/>
-</div>
-<div className='col-lg-6 w-[50%]'>
-  <RightSheats BookingSheats={sheat} handleTicketBooking={YourBookedticket?.length>9?TicketBooked:handleTicketBooking} Tickets={Tickets}/>
-</div>
-</div>
-      </div>
-      </section>
-      <section>
-        <Footer/>
-      </section>
+        <section>
+            <Header/>
+        </section>
+        <section>
+            
+            <div className='row gap-3 mt-4 mb-5 mx-auto w-[90%]'>
+                {movienNameList?.map((item,index)=>{
+                    return(
+                        <div onClick={()=>TicketBooking(item)} className='border rounded cursor-pointer bg-green-500 text-white w-[25%] col-lg-2 p-2 mt-2 mb-3 fs-6 fw-bold' key={index}>
+{item}
+                        </div>
+                    )
+                })}
+            </div>
+        </section>
+        <section>
+            <Footer/>
+        </section>
     </div>
   )
 }

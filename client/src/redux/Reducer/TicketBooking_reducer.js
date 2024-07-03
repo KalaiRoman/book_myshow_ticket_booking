@@ -2,9 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 const BookingTicketSlice = createSlice({
   name: 'Booking Tickets',
   initialState: {
-   Tickets:[]
+   Tickets:[],
+   allTickets:[]
   },
   reducers: {
+    AllTicketNos:(state,action)=>{
+      state.allTickets.push(action.payload)
+    },
     BookTicket:(state, action)=>{
       state.Tickets=[...state?.Tickets,action.payload]
     },
@@ -13,5 +17,5 @@ const BookingTicketSlice = createSlice({
       },
   },
 })
-export const { BookTicket,filterTicket } = BookingTicketSlice.actions
+export const { BookTicket,filterTicket,AllTicketNos } = BookingTicketSlice.actions
 export default BookingTicketSlice.reducer

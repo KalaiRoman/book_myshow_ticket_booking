@@ -1,4 +1,5 @@
 
-import Home from './../components/home/Home';
 import Auth from './../components/auth/Auth';
-export {Home,Auth}
+import TicketSection from './../components/Tickets/TicketsSection'
+import Home from './../components/home/Home';
+export {Auth,TicketSection,Home}
