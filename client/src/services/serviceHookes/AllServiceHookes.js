@@ -14,7 +14,6 @@ import { All_Apis } from "../allApis/AllApis";
 //     }
 // }
 
-
 export async function loginservices(data) {
     try {
         const response = await instanceBaseurl.post(`/auth/login`, data);

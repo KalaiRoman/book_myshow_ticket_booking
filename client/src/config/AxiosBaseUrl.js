@@ -94,11 +94,8 @@ instanceBaseurl.defaults.withCredentials = true;
 
 instanceBaseurl.interceptors.request.use(function (config) {
   const token = localStorage.getItem("ticket_token");
-  // if(token)
-  //   {
-      config.headers.Authorization = `${JSON.parse(token)}`;
+      config.headers.Authorization = token?token:null;
       return config;
-    // }
 }, function (error) {
     // Do something with request error
     return Promise.reject(error);

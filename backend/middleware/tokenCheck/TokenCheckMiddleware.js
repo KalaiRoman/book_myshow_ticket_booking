@@ -1,7 +1,7 @@
 // middleware/auth.js
 import jwt from 'jsonwebtoken';
 const verifyToken = (req, res, next) => {
-    const token = req.header('Authorization');    
+    const token = JSON.parse(req.header('Authorization'));    
     if (!token) {
         return res.status(401).json({ message: 'No token, authorization denied' });
     }

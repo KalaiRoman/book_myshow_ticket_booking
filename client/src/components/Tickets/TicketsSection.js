@@ -6,7 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AllTicketNos, BookTicket,filterTicket } from '../../redux/Reducer/TicketBooking_reducer'
 import { book_services, get_booked_services } from '../../services/serviceHookes/AllServiceHookes'
 import { useParams } from 'react-router-dom'
+import GetMethod from '../../Allapis/GetMethod/GetMethod'
+import { All_Apis } from '../../services/allApis/AllApis'
 function TicketsSection() {
+
+  const {loading,response,errors,fetchGetMethodApi}=GetMethod()
   const {name}=useParams();
   const BookingSheats=Array(341)?.fill("Sheats");
   const dispatch=useDispatch();
@@ -28,9 +32,13 @@ for(let i=1;i<BookingSheats?.length;i++)
   dispatch(AllTicketNos(values))
 
   }
+  if(response)
+  {
+    setYourBookedTicketPay(response?.Your_tickets);
+        setYourBookedTicketOtherPay(response?.OtherUserTickets);
+  }
 
-
-  },[]);
+  },[response]);
   const TicketBooked=(paramsTicketId)=>{
       setError("One Person Booked Ticket Only 10, Please Login Another Email Id");
       if (paramsTicketId) {
@@ -76,12 +84,19 @@ const BookTicketApi=()=>{
 
 const Booked_user_tickets=async()=>{
   try {
-    const response=await get_booked_services(name);
-    if(response)
-      {
-        setYourBookedTicketPay(response?.data?.data?.Your_tickets);
-        setYourBookedTicketOtherPay(response?.data?.data?.OtherUserTickets);
-      }
+
+
+    fetchGetMethodApi({
+      "url":All_Apis?.get_booked_ticktes,
+     "params":name
+    })
+    
+    // const response=await get_booked_services(name);
+    // if(response)
+    //   {
+    //     setYourBookedTicketPay(response?.data?.data?.Your_tickets);
+    //     setYourBookedTicketOtherPay(response?.data?.data?.OtherUserTickets);
+    //   }
   } catch (error) {
   }
 }
@@ -91,6 +106,8 @@ useEffect(()=>{
       Booked_user_tickets();
     }
 },[name])
+
+console.log(response,errors,loading,"kalai")
   return (
     <div>
      <section>
